@@ -1,11 +1,14 @@
 {
   "name": "advent-code",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "scripts": {
-    "day1": "ts-node src/day1.ts"
+    "day1": "node --loader ts-node/esm src/day1.mts"
   },
-  "keywords": [],
-  "author": "",
+  "type": "module",
+  "keywords": [
+    "advent-of-code"
+  ],
+  "author": "Tommaso Ricci <zorgatone@gmail.com>",
   "license": "UNLICENSED",
   "description": "Advent of Code",
   "private": true,
@@ -13,5 +16,9 @@
     "@types/node": "^22.10.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.7.2"
+  },
+  "volta": {
+    "node": "20.18.1",
+    "npm": "10.8.2"
   }
 }

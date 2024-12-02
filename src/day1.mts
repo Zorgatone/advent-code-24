@@ -18,10 +18,11 @@ const parseLine = (line: string): [number, number] => {
       numStr1 = line.substring(0, separatorIndex);
     } else if (char !== " " && separatorIndex > -1) {
       numStr2 = line.substring(separatorIndex);
+      break;
     }
   }
 
-  return [+numStr1!, +numStr2!];
+  return [+numStr1, +numStr2];
 };
 
 const readData = async (
@@ -64,10 +65,16 @@ const main = () => {
     listRight.push(right);
   };
 
+  console.log("Advent of Code: Day 1\n");
+
   readData("data/day1.txt", parseCallback)
     .then(() => {
       const totalDistance = listDiff(listLeft, listRight);
-      console.log(`Result: ${totalDistance}`);
+      console.log(`Pt.1 - Total distance: ${totalDistance}`);
+
+      // TODO: part 2
+      // const similarityScore = 0;
+      // console.log(`Pt.2 - Similarity score: ${similarityScore}`);
     })
     .catch((error) => {
       console.error(error);
