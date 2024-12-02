@@ -1,6 +1,5 @@
 import { createReadStream } from "node:fs";
 import { createInterface } from "node:readline";
-// import {  } from "node:fs/promises";
 
 // NOTE: no validation
 const parseLine = (line: string): [number, number] => {
@@ -29,7 +28,6 @@ const readData = async (
   fileName: string,
   callBack: (line: string) => void
 ): Promise<void> => {
-  // return await readFile(fileName, { encoding: "utf-8" });
   const fileStream = createReadStream(fileName, { encoding: "utf-8" });
   const rl = createInterface({ input: fileStream, crlfDelay: Infinity });
 
