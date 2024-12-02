@@ -1,0 +1,17 @@
+{
+  "name": "advent-code",
+  "version": "1.0.0",
+  "scripts": {
+    "day1": "ts-node src/day1.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "UNLICENSED",
+  "description": "Advent of Code",
+  "private": true,
+  "devDependencies": {
+    "@types/node": "^22.10.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.2"
+  }
+}
