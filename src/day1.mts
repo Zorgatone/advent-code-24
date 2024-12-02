@@ -40,7 +40,7 @@ const readData = async (
 const sortFn = (a: number, b: number) => b - a;
 
 // NOTE: no validation
-const listDiff = (listLeft: number[], listRight: number[]): number => {
+const listDistance = (listLeft: number[], listRight: number[]): number => {
   const sortedLeft = listLeft.sort(sortFn);
   const sortedRight = listRight.sort(sortFn);
 
@@ -51,6 +51,22 @@ const listDiff = (listLeft: number[], listRight: number[]): number => {
   }
 
   return distance;
+};
+
+// NOTE: no validation
+const listSimilarity = (listLeft: number[], listRight: number[]): number => {
+  const countMap = new Map<number, number>(listLeft.map((n) => [n, 0]));
+
+  for (const n of listRight) {
+    if (countMap.has(n)) {
+      countMap.set(n, countMap.get(n)! + 1);
+    }
+  }
+
+  return Array.from(countMap.entries()).reduce(
+    (acc, [n, count]) => acc + n * count,
+    0
+  );
 };
 
 // https://adventofcode.com/2024/day/1
@@ -69,12 +85,11 @@ const main = () => {
 
   readData("data/day1.txt", parseCallback)
     .then(() => {
-      const totalDistance = listDiff(listLeft, listRight);
+      const totalDistance = listDistance(listLeft, listRight);
       console.log(`Pt.1 - Total distance: ${totalDistance}`);
 
-      // TODO: part 2
-      // const similarityScore = 0;
-      // console.log(`Pt.2 - Similarity score: ${similarityScore}`);
+      const similarityScore = listSimilarity(listLeft, listRight);
+      console.log(`Pt.2 - Similarity score: ${similarityScore}`);
     })
     .catch((error) => {
       console.error(error);
