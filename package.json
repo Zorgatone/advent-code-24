@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "scripts": {
     "day1": "node --loader ts-node/esm src/day1.mts",
-    "day2": "node --loader ts-node/esm src/day2.mts"
+    "day2": "node --loader ts-node/esm src/day2.mts",
+    "day3": "node --loader ts-node/esm src/day3.mts"
   },
   "type": "module",
   "keywords": [

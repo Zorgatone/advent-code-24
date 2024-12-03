@@ -92,17 +92,17 @@ export function main() {
       const similarityScore = listSimilarity(listLeft, listRight);
       console.log(`Pt.2 - Similarity score: ${similarityScore}`);
     })
-    .catch((error) => {
+    .catch((error: unknown) => {
       console.error(error);
     });
 }
 
-if (import.meta.url.startsWith("file:")) {
-  const modulePath = fileURLToPath(import.meta.url);
-  if (process.argv[1] === modulePath) {
-    // Main ESM module
-    main();
-  }
+if (
+  import.meta.url.startsWith("file:") &&
+  process.argv[1] === fileURLToPath(import.meta.url)
+) {
+  // Main ESM module
+  main();
 }
 
 export default main;
