@@ -1,3 +1,4 @@
+import { fileURLToPath } from "node:url";
 import { createReadStream } from "node:fs";
 import { createInterface } from "node:readline";
 
@@ -70,7 +71,7 @@ const listSimilarity = (listLeft: number[], listRight: number[]): number => {
 };
 
 // https://adventofcode.com/2024/day/1
-const main = () => {
+export function main() {
   const listLeft: number[] = [];
   const listRight: number[] = [];
 
@@ -94,6 +95,14 @@ const main = () => {
     .catch((error) => {
       console.error(error);
     });
-};
+}
 
-main();
+if (import.meta.url.startsWith("file:")) {
+  const modulePath = fileURLToPath(import.meta.url);
+  if (process.argv[1] === modulePath) {
+    // Main ESM module
+    main();
+  }
+}
+
+export default main;

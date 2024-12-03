@@ -2,7 +2,8 @@
   "name": "advent-code",
   "version": "0.0.1",
   "scripts": {
-    "day1": "node --loader ts-node/esm src/day1.mts"
+    "day1": "node --loader ts-node/esm src/day1.mts",
+    "day2": "node --loader ts-node/esm src/day2.mts"
   },
   "type": "module",
   "keywords": [
