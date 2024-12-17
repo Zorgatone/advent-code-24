@@ -4,7 +4,9 @@ import { readFile } from "node:fs/promises";
 const readData = async (fileName: string): Promise<string> =>
   await readFile(fileName, { encoding: "utf-8" });
 
-const getMulOperation = (chars: string[]): [number, number] | null => {
+const getMulOperation = (
+  chars: string[]
+): { op1: number; op2: number; endOffset: number } | null => {
   let op1: number = Number.NaN;
   let op2: number = Number.NaN;
 
@@ -41,7 +43,7 @@ const getMulOperation = (chars: string[]): [number, number] | null => {
       if (Number.isNaN(op2) || !isFinite(op2)) {
         return null; // Failed to parse it
       }
-      return [op1, op2];
+      return { op1, op2, endOffset: currentIndex };
     } else {
       return null;
     }
@@ -61,7 +63,39 @@ const parseData = (data: string): Array<[number, number]> => {
       const sliced = chars.slice(index);
       const mulOp = getMulOperation(sliced);
       if (mulOp) {
-        mulOps.push(mulOp);
+        const { op1, op2, endOffset } = mulOp;
+        mulOps.push([op1, op2]);
+        index += endOffset;
+      }
+    }
+  }
+
+  return mulOps;
+};
+
+const parseEnabledData = (data: string): Array<[number, number]> => {
+  const mulOps: Array<[number, number]> = [];
+
+  const chars = Array.from(data);
+  let enabled = true;
+  for (let index = 0, length = chars.length; index < length; index++) {
+    if (chars[index] === "d") {
+      if (chars.slice(index, index + 4).join("") === "do()") {
+        enabled = true;
+        index += 4;
+      } else if (chars.slice(index, index + 7).join("") === "don't()") {
+        enabled = false;
+        index += 7;
+      }
+    } else if (chars[index] === "m") {
+      const sliced = chars.slice(index);
+      const mulOp = getMulOperation(sliced);
+      if (mulOp) {
+        const { op1, op2, endOffset } = mulOp;
+        if (enabled) {
+          mulOps.push([op1, op2]);
+        }
+        index += endOffset;
       }
     }
   }
@@ -87,6 +121,19 @@ export function main() {
       );
 
       console.log(`Pt.1 - mult() operations sum: ${mulOpsSum}`);
+
+      const enabledData = parseEnabledData(data);
+
+      if (enabledData.length < 1) {
+        throw new Error("Empty data!");
+      }
+
+      const mulOpsEnabledSum = enabledData.reduce(
+        (acc, [n1, n2]) => acc + mul(n1, n2),
+        0
+      );
+
+      console.log(`Pt.2 - enabled mult() operations sum: ${mulOpsEnabledSum}`);
     })
     .catch((error: unknown) => {
       console.error(error);
